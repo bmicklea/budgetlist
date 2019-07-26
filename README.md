@@ -5,7 +5,7 @@ The main aim of developing this application is to explore the working of nodejs 
 ## Deploying to OpenShift
 
 Deploy this sample application to Red Hat CodeReady Workspaces:
-<a href="http://codeready-crw.apps.ocp4.home.ocpcloud.com/f?id=factorym3giwt4ttfmvfxgq">
+<a href="http://codeready-crw.apps.ocp4.home.ocpcloud.com/f?url=https://github.com/VeerMuchandi/nodejs-todo-app.git">
     <img src="http://beta.codenvy.com/factory/resources/codenvy-contribute.svg" width="130" alt="Push" align="top">
 </a>
 
