@@ -1,0 +1,112 @@
+{
+  "v": "4.0",
+  "name": "todo3",
+  "workspace": {
+    "defaultEnv": "default",
+    "environments": {
+      "default": {
+        "machines": {
+          "dev-machine": {
+            "attributes": {
+              "memoryLimitBytes": "2147483648"
+            },
+            "servers": {
+              "5000/tcp": {
+                "port": "5000",
+                "attributes": {},
+                "protocol": "http"
+              },
+              "3000/tcp": {
+                "port": "3000",
+                "attributes": {},
+                "protocol": "http"
+              },
+              "8080/tcp": {
+                "port": "8080",
+                "attributes": {},
+                "protocol": "http"
+              },
+              "9000/tcp": {
+                "port": "9000",
+                "attributes": {},
+                "protocol": "http"
+              }
+            },
+            "volumes": {},
+            "installers": [
+              "org.eclipse.che.exec",
+              "org.eclipse.che.terminal",
+              "org.eclipse.che.ws-agent",
+              "org.eclipse.che.ls.js-ts",
+              "com.redhat.bayesian.lsp"
+            ],
+            "env": {}
+          }
+        },
+        "recipe": {
+          "type": "dockerimage",
+          "content": "registry.redhat.io/codeready-workspaces/stacks-node-rhel8"
+        }
+      }
+    },
+    "projects": [
+      {
+        "links": [],
+        "name": "nodejs-todo-app",
+        "attributes": {
+          "contribute_to_branch": [
+            "master"
+          ],
+          "commands": [
+            "{\"commandLine\":\"cd nodejs-todo-app && npm start\", \"name\":\"run\", \"attributes\":{\"goal\":\"Run\", \"previewUrl\":\"${server.3000/tcp}/todo\"}, \"type\":\"custom\"}",
+            "{\"commandLine\":\"cd nodejs-todo-app && npm install\", \"name\":\"initialize\", \"attributes\":{\"goal\":\"Build\", \"previewUrl\":\"\"}, \"type\":\"custom\"}"
+          ]
+        },
+        "type": "blank",
+        "source": {
+          "location": "git@github.com:VeerMuchandi/nodejs-todo-app.git",
+          "type": "git",
+          "parameters": {}
+        },
+        "path": "/nodejs-todo-app",
+        "description": "",
+        "problems": [],
+        "mixins": [
+          "pullrequest"
+        ]
+      }
+    ],
+    "name": "todoapp",
+    "attributes": {},
+    "commands": [
+      {
+        "commandLine": "cd nodejs-todo-app && npm install",
+        "name": "initialize",
+        "attributes": {
+          "previewUrl": ""
+        },
+        "type": "custom"
+      }
+    ],
+    "links": []
+  },
+  "id": "factorykambf96q6d223w4h",
+  "ide": {
+    "onProjectsLoaded": {
+      "actions": [
+        {
+          "properties": {
+            "file": "/nodejs-todo-app/package.json"
+          },
+          "id": "openFile"
+        }
+      ]
+    }
+  },
+  "creator": {
+    "name": "veer",
+    "email": "veer@redhat.com",
+    "created": 1564153045546,
+    "userId": "a28d9850-345a-4d37-b99f-07742d2776c3"
+  }
+}
