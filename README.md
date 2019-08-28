@@ -1,37 +1,10 @@
-# Sample Application
+# Application
 
-The main aim of developing this application is to explore the working of nodejs and expressjs.
+This magical application will take your unused budget and turn it into profit each and every month!
 
-## Deploying to OpenShift
+## Developing and Running the Application
 
-Deploy this sample application to Red Hat CodeReady Workspaces:
+This application runs on Red Hat OpenShift Kubernetes. To simplify development we use Red Hat CodeReady Workspaces. Just click the button to jump into the preconfigured project in the IDE:
 <a href="https://che.openshift.io/f?id=factorylztfoa6yozjl88k9">
     <img src="http://beta.codenvy.com/factory/resources/codenvy-contribute.svg" width="130" alt="Push" align="top">
 </a>
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine.
-
-### Prerequisites
-
-Below steps are needed only for the first time when you setup your dev machine
-
-Install node.js server from https://nodejs.org/en/download/
-
-### Installing
-
-1. Clone this git repository, if you haven't done already.
-
-   `git clone https://github.com/cmevawala/nodejs-todo-app.git`
-
-2. Install local npm dependencies
-
-   `npm install`
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Built With
-
-* [Node](https://nodejs.org/en/) - JavaScript runtime built on Chrome's V8 JavaScript engine
-* [Express](https://expressjs.com/) - Node.js web application framework
