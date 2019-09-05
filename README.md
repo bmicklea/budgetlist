@@ -15,7 +15,7 @@ Alternatively click this link: http://codeready-crw.apps.ocp4.home.ocpcloud.com/
 
 ## Building the Application Locally
 
-## Pre-requisites
+### Pre-requisites
 - Optional Terraform
 - Optional AWS Account
 - Optional awscli
@@ -32,7 +32,7 @@ unzip /tmp/terraform.zip -d /usr/bin
 git clone https://github.com/microservices-demo/microservices-demo
 cd microservices-demo
 ```
-## Setup Kubernetes
+### Setup Kubernetes
 Begin by setting the appropriate AWS environment variables.
 
 ```
@@ -60,7 +60,7 @@ master_ip=$(terraform output -json | jq -r '.master_address.value')
 scp -i ~/.ssh/deploy-docs-k8s.pem -o StrictHostKeyChecking=no -rp deploy/kubernetes/manifests ubuntu@$master_ip:/tmp/
 ```
 
-## Setup Weave Net
+### Secondary Setup
 Run the following commands to setup Kubernetes and Weave Net on the master instance
 
 ```
@@ -83,7 +83,7 @@ for node in $node_addresses; do
 done
 ```
 
-### Setup Weave Scope
+### Setup Scope
 There are two options for running Weave Scope, either you can run the UI locally, or using the hosted provider at `cloud.weave.works`
 
 #### Locally
@@ -104,10 +104,10 @@ ssh -i ~/.ssh/deploy-docs-k8s.pem ubuntu@$master_ip KUBECONFIG=\$HOME/admin.conf
 'https://cloud.weave.works/launch/k8s/weavescope.yaml?service-token=<token>'
 ```
 
-### (Optional) Setup Weave Flux
+#### (Optional) Setup Auto-Deploy
 You may optionally choose to configure Weave Flux which allows automatic deployment of changes. Unfortunately it’s beyond the scope of this document, but you can read more about it here.
 
-### (Optional) Setup Fluentd + ELK based logging
+#### (Optional) Setup Fluentd + ELK based logging
 - Copy the logging manifests
 - Start Fluentd, Elasticsearch and Kibana
 
@@ -117,7 +117,7 @@ You may optionally choose to configure Weave Flux which allows automatic deploym
     ssh -i ~/.ssh/deploy-docs-k8s.pem ubuntu@$master_ip kubectl apply -f /tmp/manifests-logging/
 ```
 
-## Deploy the App
+### Deploy the App
 - SSH into the master node
 - Deploy the app
 
@@ -126,7 +126,7 @@ master_ip=$(terraform output -json | jq -r '.master_address.value')
 ssh -i ~/.ssh/deploy-docs-k8s.pem ubuntu@$master_ip KUBECONFIG=\$HOME/admin.conf kubectl apply -f /tmp/manifests/sock-shop-ns.yaml -f /tmp/manifests
 ```
 
-## Deploy the App with Opentracing (optional)
+### Deploy the App with Opentracing (optional)
 To deploy with opentracing run after deploying the sock-shop
 
 ```
@@ -134,7 +134,7 @@ To deploy with opentracing run after deploying the sock-shop
     ssh -i ~/.ssh/deploy-docs-k8s.pem ubuntu@$master_ip KUBECONFIG=\$HOME/admin.conf kubectl apply -f /tmp/manifests-zipkin/zipkin-ns.yaml -f /tmp/manifests-zipkin
 ```
 
-## Service autoscaling (optional)
+### Service autoscaling (optional)
 If you want all stateless services to scale automatically based on the CPU utilization, you can deploy all the manifests in the “deploy/kubernetes/autoscaling” directory. The autoscaling directory contains Kubernetes horizontal pod autoscalers for all the stateless services, and the Heapster monitoring application with it’s depedencies.
 
 ```
@@ -145,7 +145,7 @@ If you want all stateless services to scale automatically based on the CPU utili
 
 If you cause enough load on the application you should see the various services scaling up in number.
 
-## View the results
+### View the results
 Run terraform output command to see the load balancer and node URLs
 
 The app is available at the sock_shop_address as displayed below. The scope app is accessible via the master and any of the node urls on port 30001, while the same applies for Kibana if you deployed it, but using port 31601. It may take a few moments for the apps to get running.
@@ -162,7 +162,7 @@ node_addresses = [
 sock_shop_address = MD-k8s-elb-sock-shop-1211989270.eu-west-1.elb.amazonaws.com
 ```
 
-## Run tests
+### Run tests
 There is a separate load-test available to simulate user traffic to the application. For more information see Load Test. This will send some traffic to the application, which will form the connection graph that you can view in Scope or Weave Cloud.
 
 ```
@@ -170,10 +170,10 @@ There is a separate load-test available to simulate user traffic to the applicat
     docker run --rm weaveworksdemos/load-test -d 300 -h $elb_url -c 2 -r 100
 ```
 
-## Opentracing
+### Opentracing
 Zipkin is part of the deployment and has been written into some of the services. While the system is up you can view the traces in Zipkin at http://<loadbalancer>:9411. Currently orders provide the most comprehensive traces.
 
-## Uninstall App
+### Uninstall App
 Remove all deployments (will also remove pods)
 
 `ssh -i ~/.ssh/deploy-docs-k8s.pem ubuntu@$master_ip kubectl delete deployments --all`
