@@ -2,7 +2,7 @@
 
 This magical application will take your unused budget and turn it into profit each and every month!
 
-## Developing and Running the Application
+## Developing using CodeReady Workspaces
 
 To simplify development we use Red Hat CodeReady Workspaces on Red Hat OpenShift Kubernetes.
 
