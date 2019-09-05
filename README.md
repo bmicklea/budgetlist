@@ -7,11 +7,11 @@ This magical application will take your unused budget and turn it into profit ea
 To simplify development we use Red Hat CodeReady Workspaces on Red Hat OpenShift Kubernetes.
 
 Just click the button to jump into the preconfigured project in the IDE:
-<a href="https://che.openshift.io/f?id=factorylztfoa6yozjl88k9">
+<a href="http://codeready-crw.apps.ocp4.home.ocpcloud.com/f?id=factoryz3nvt76swj4nvh8k">
     <img src="http://beta.codenvy.com/factory/resources/codenvy-contribute.svg" width="130" alt="Push" align="top">
 </a>
 
-Alternatively click this link: http://codeready-crw.apps.ocp4.home.ocpcloud.com/f?id=factoryz3nvt76swj4nvh8k
+Alternatively click this link: https://che.openshift.io/f?id=factorylztfoa6yozjl88k9
 
 ## Building the Application Locally
 
