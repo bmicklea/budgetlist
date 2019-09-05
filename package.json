@@ -1,7 +1,7 @@
 {
   "name": "nodejs-todo-app",
   "version": "1.0.0",
-  "description": "Todo Application using Node and Express JS",
+  "description": "Magical application that turns unused budget into profit.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
