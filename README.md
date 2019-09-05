@@ -16,9 +16,12 @@ Alternatively click this link: http://codeready-crw.apps.ocp4.home.ocpcloud.com/
 ## Building the Application Locally
 
 ### Pre-requisites
-- Optional Terraform
-- Optional AWS Account
+- Kubernetes
+- AWS Account Access
 - Optional awscli
+- Git repo connection
+- Connection to private container registry
+- Connection to private artifact repository
 
 ```
 curl -sSL https://get.docker.com/ | sh
