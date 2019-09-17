@@ -184,7 +184,7 @@ rm -f join.cmd
 
 # Developing using CodeReady Workspaces
 
-To simplify development we use Red Hat CodeReady Workspaces on Red Hat OpenShift Kubernetes.
+To contribute to this project without having to install or configure software, we use Red Hat CodeReady Workspaces on Red Hat OpenShift Kubernetes.
 
 Just click the button to jump into the preconfigured project in the IDE:
 <a href="http://codeready-crw.apps.ocp4.home.ocpcloud.com/f?id=factoryz3nvt76swj4nvh8k">
