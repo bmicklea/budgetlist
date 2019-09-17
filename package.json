@@ -16,7 +16,6 @@
   "bugs": {
     "url": "https://github.com/bmicklea/budgetlist/issues"
   },
-  "homepage": "https://github.com/bmicklea/budgetlist#readme",
   "dependencies": {
     "@types/node": "^12.6.8",
     "body-parser": "^1.19.0",
