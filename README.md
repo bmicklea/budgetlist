@@ -187,7 +187,7 @@ rm -f join.cmd
 To contribute to this project without having to install or configure software, we use Red Hat CodeReady Workspaces on Red Hat OpenShift Kubernetes.
 
 Just click the button to jump into the preconfigured project in the IDE:
-<a href="http://codeready-crw.apps.ocp4.home.ocpcloud.com/f?id=factoryz3nvt76swj4nvh8k">
+<a href="http://codeready-crw.apps.ocp4.home.ocpcloud.com/f?name=RHTE2019&user=bmicklea">
     <img src="http://beta.codenvy.com/factory/resources/codenvy-contribute.svg" width="130" alt="Push" align="top">
 </a>
 
