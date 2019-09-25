@@ -48,7 +48,7 @@ master_ip=$(terraform output -json | jq -r '.master_address.value')
 scp -i ~/.ssh/deploy-docs-k8s.pem -o StrictHostKeyChecking=no -rp deploy/kubernetes/manifests ubuntu@$master_ip:/tmp/
 ```
 
-### Secondary Setup
+### Post-Install Configuration
 Run the following commands to setup Kubernetes and Weave Net on the master instance
 
 ```
@@ -59,8 +59,6 @@ ssh -i ~/.ssh/deploy-docs-k8s.pem ubuntu@$master_ip "sudo chown \$(id -u):\$(id 
 grep -e --token k8s-init.log > join.cmd
 ssh -i ~/.ssh/deploy-docs-k8s.pem ubuntu@$master_ip KUBECONFIG=\$HOME/admin.conf kubectl apply -f https://git.io/weave-kube-1.6
 ```
-
-### Time for the nodes to join the master
 
 Run the following commands to SSH into each node_addresses and run the `kubeadm join --token <token> <master-ip>` command from before.
     
@@ -83,28 +81,6 @@ master_ip=$(terraform output -json | jq -r '.master_address.value')
 ssh -i ~/.ssh/deploy-docs-k8s.pem ubuntu@$master_ip KUBECONFIG=\$HOME/admin.conf kubectl apply -f 'https://cloud.weave.works/launch/k8s/weavescope.yaml'
 ```
 
-#### Hosted
-- SSH into the master node
-- Running the Scope UI on Weave Cloud using the `<token>` from `cloud.weave.works`
-    ssh -i ~/.ssh/deploy-docs-k8s.pem ubuntu@$master_ip kubectl apply -f 
-
-```
-'https://cloud.weave.works/launch/k8s/weavescope.yaml?service-token=<token>'
-```
-
-#### (Optional) Setup Auto-Deploy
-You may optionally choose to configure Weave Flux which allows automatic deployment of changes. Unfortunately it’s beyond the scope of this document, but you can read more about it here.
-
-#### (Optional) Setup Fluentd + ELK based logging
-- Copy the logging manifests
-- Start Fluentd, Elasticsearch and Kibana
-
-```
-    master_ip=$(terraform output -json | jq -r '.master_address.value')
-    scp -i ~/.ssh/deploy-docs-k8s.pem -rp deploy/kubernetes/manifests-logging ubuntu@$master_ip:/tmp/
-    ssh -i ~/.ssh/deploy-docs-k8s.pem ubuntu@$master_ip kubectl apply -f /tmp/manifests-logging/
-```
-
 ### Deploy the App
 - SSH into the master node
 - Deploy the app
@@ -113,25 +89,6 @@ You may optionally choose to configure Weave Flux which allows automatic deploym
 master_ip=$(terraform output -json | jq -r '.master_address.value')
 ssh -i ~/.ssh/deploy-docs-k8s.pem ubuntu@$master_ip KUBECONFIG=\$HOME/admin.conf kubectl apply -f /tmp/manifests/sock-shop-ns.yaml -f /tmp/manifests
 ```
-
-### Deploy the App with Opentracing (optional)
-To deploy with opentracing run after deploying the sock-shop
-
-```
-    master_ip=$(terraform output -json | jq -r '.master_address.value')
-    ssh -i ~/.ssh/deploy-docs-k8s.pem ubuntu@$master_ip KUBECONFIG=\$HOME/admin.conf kubectl apply -f /tmp/manifests-zipkin/zipkin-ns.yaml -f /tmp/manifests-zipkin
-```
-
-### Service autoscaling (optional)
-If you want all stateless services to scale automatically based on the CPU utilization, you can deploy all the manifests in the “deploy/kubernetes/autoscaling” directory. The autoscaling directory contains Kubernetes horizontal pod autoscalers for all the stateless services, and the Heapster monitoring application with it’s depedencies.
-
-```
-    master_ip=$(terraform output -json | jq -r '.master_address.value')
-    scp -i ~/.ssh/deploy-docs-k8s.pem -o StrictHostKeyChecking=no -rp deploy/kubernetes/autoscaling ubuntu@$master_ip:/tmp/
-    ssh -i ~/.ssh/deploy-docs-k8s.pem ubuntu@$master_ip kubectl apply -f /tmp/autoscaling
-```
-
-If you cause enough load on the application you should see the various services scaling up in number.
 
 ### View the results
 Run terraform output command to see the load balancer and node URLs
@@ -161,26 +118,6 @@ There is a separate load-test available to simulate user traffic to the applicat
 ### Opentracing
 Zipkin is part of the deployment and has been written into some of the services. While the system is up you can view the traces in Zipkin at http://<loadbalancer>:9411. Currently orders provide the most comprehensive traces.
 
-### Uninstall App
-Remove all deployments (will also remove pods)
-
-`ssh -i ~/.ssh/deploy-docs-k8s.pem ubuntu@$master_ip kubectl delete deployments --all`
-
-Remove all services, except kubernetes
-
-`ssh -i ~/.ssh/deploy-docs-k8s.pem ubuntu@$master_ip kubectl delete service $(kubectl get services | cut -d" " -f1 | grep -v NAME | grep -v kubernetes)`
-
-Destroying the entire infrastructure
-
-```
-terraform destroy -force deploy/kubernetes/terraform/
-aws ec2 delete-key-pair -\-key-name deploy-docs-k8s
-rm -f ~/.ssh/deploy-docs-k8s.pem
-rm -f terraform.tfstate
-rm -f terraform.tfstate.backup
-rm -f k8s-init.log
-rm -f join.cmd
-```
 
 # Developing using CodeReady Workspaces
 
